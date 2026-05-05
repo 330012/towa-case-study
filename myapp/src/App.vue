@@ -1,11 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AppHeader from '@/components/layout/AppHeader.vue'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="min-h-screen bg-slate-50">
+    <AppHeader />
+    <main class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <!-- content here -->
+    </main>
+  </div>
 </template>
-
-<style scoped></style>
