@@ -36,6 +36,36 @@ describe('usePokemon - search filtering', () => {
 		expect(filteredPokemon.value).toHaveLength(5)
 	})
 
+	it('filters by id when searchQuery is 1 digit', () => {
+		const { pokemonList, searchQuery, filteredPokemon } = usePokemon()
+		pokemonList.value = mockPokemonList
+		searchQuery.value = '1'
+
+		expect(filteredPokemon.value).toEqual([
+			{ id: 1, name: 'bulbasaur', image: '', url: '', types: ['grass', 'poison'] },
+		])
+	})
+
+	it('filters by id when searchQuery is 2 digits (including leading zeros)', () => {
+		const { pokemonList, searchQuery, filteredPokemon } = usePokemon()
+		pokemonList.value = mockPokemonList
+		searchQuery.value = '01'
+
+		expect(filteredPokemon.value).toEqual([
+			{ id: 1, name: 'bulbasaur', image: '', url: '', types: ['grass', 'poison'] },
+		])
+	})
+
+	it('filters by id when searchQuery starts with #', () => {
+		const { pokemonList, searchQuery, filteredPokemon } = usePokemon()
+		pokemonList.value = mockPokemonList
+		searchQuery.value = '#4'
+
+		expect(filteredPokemon.value).toEqual([
+			{ id: 4, name: 'charmander', image: '', url: '', types: ['fire'] },
+		])
+	})
+
 	it('filters correctly when searchQuery is exactly 3 characters', () => {
 		const { pokemonList, searchQuery, filteredPokemon } = usePokemon()
 		pokemonList.value = mockPokemonList
