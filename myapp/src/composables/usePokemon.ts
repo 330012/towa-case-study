@@ -23,6 +23,8 @@ export function usePokemon() {
 		const rawQuery = searchQuery.value.trim().toLowerCase()
 		if (!rawQuery) return pokemonList.value
 
+		// Enhancement: numeric queries (e.g. "1", "#007") search by Pokémon ID immediately
+		// without the 3-character minimum required for name search
 		const maybeNumeric = rawQuery.startsWith('#') ? rawQuery.slice(1) : rawQuery
 		if (/^[0-9]+$/.test(maybeNumeric)) {
 			const parsed = parseInt(maybeNumeric, 10)

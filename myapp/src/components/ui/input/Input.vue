@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 
 defineOptions({ inheritAttrs: false })
 
-const props = withDefaults(
+withDefaults(
 	defineProps<{
 		modelValue?: string
 		type?: string

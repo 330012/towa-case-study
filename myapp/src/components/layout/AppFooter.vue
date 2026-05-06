@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Separator from '@/components/ui/separator/Separator.vue'
 
-// Navigation data (keep in sync with header)
+// Navigation data
 const navItems = [
 	{ label: 'Home', href: '#' },
 	{ label: 'Projects', href: '#projects' },
@@ -18,7 +18,7 @@ const navItems = [
 				<!-- Column 1: Logo + tagline -->
 				<div>
 					<div class="font-display text-xl font-semibold text-slate-900 dark:text-white">
-						TOWA Atlas
+						TOWA
 					</div>
 					<p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
 						Digital transformation end-to-end.
@@ -60,9 +60,10 @@ const navItems = [
 
 			<!-- Bottom bar -->
 			<Separator class="mt-10" />
-			<div class="mt-6 flex flex-col items-center justify-between gap-3 rounded-2xl bg-slate-900 px-4 py-4 text-slate-200 sm:flex-row">
+			<div
+				class="mt-6 flex flex-col items-center justify-between gap-3 rounded-2xl bg-slate-100 px-4 py-4 text-slate-700 dark:bg-slate-900 dark:text-slate-200 sm:flex-row"
+			>
 				<p class="text-sm">© 2026 TOWA Digital GmbH. All rights reserved.</p>
-				<p class="text-xs text-slate-400">Built with Vue 3 + shadcn-vue style components</p>
 			</div>
 		</div>
 	</footer>

@@ -7,38 +7,40 @@ import CardGrid from '@/components/grid/CardGrid.vue'
 describe('CardGrid - search integration', () => {
 	beforeEach(() => {
 		// Step 1: Stub global fetch
-		const fetchMock = vi
-			.fn()
-			// First call: PokeAPI list response
-			.mockResolvedValueOnce({
-				ok: true,
-				json: async () => ({
-					results: [
-						{ name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
-						{ name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/4/' },
-					],
-				}),
-			})
-			// Second call: bulbasaur detail
-			.mockResolvedValueOnce({
-				ok: true,
-				json: async () => ({
-					id: 1,
-					name: 'bulbasaur',
-					sprites: { front_default: '' },
-					types: [{ type: { name: 'grass' } }],
-				}),
-			})
-			// Third call: charmander detail
-			.mockResolvedValueOnce({
-				ok: true,
-				json: async () => ({
-					id: 4,
-					name: 'charmander',
-					sprites: { front_default: '' },
-					types: [{ type: { name: 'fire' } }],
-				}),
-			})
+		const fetchMock = vi.fn<() => Promise<unknown>>()
+
+		// First call: PokeAPI list response
+		fetchMock.mockResolvedValueOnce({
+			ok: true,
+			json: async () => ({
+				results: [
+					{ name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
+					{ name: 'charmander', url: 'https://pokeapi.co/api/v2/pokemon/4/' },
+				],
+			}),
+		})
+
+		// Second call: bulbasaur detail
+		fetchMock.mockResolvedValueOnce({
+			ok: true,
+			json: async () => ({
+				id: 1,
+				name: 'bulbasaur',
+				sprites: { front_default: '' },
+				types: [{ type: { name: 'grass' } }],
+			}),
+		})
+
+		// Third call: charmander detail
+		fetchMock.mockResolvedValueOnce({
+			ok: true,
+			json: async () => ({
+				id: 4,
+				name: 'charmander',
+				sprites: { front_default: '' },
+				types: [{ type: { name: 'fire' } }],
+			}),
+		})
 
 		vi.stubGlobal('fetch', fetchMock)
 	})
