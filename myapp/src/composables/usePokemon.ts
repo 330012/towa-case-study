@@ -16,30 +16,31 @@ export function usePokemon() {
 	// State: search
 	const searchQuery = ref('')
 
-	// Derived state: filtered list
-	// - Name search filters only after 3+ characters
-	// - Numeric search (id) filters immediately (e.g. "1", "02", "#7")
-	const filteredPokemon = computed(() => {
-		const rawQuery = searchQuery.value.trim().toLowerCase()
-		if (!rawQuery) return pokemonList.value
+  const filteredPokemon = computed(() => {
+    const rawQuery = searchQuery.value.trim().toLowerCase()
 
-		// Enhancement: numeric queries (e.g. "1", "#007") search by Pokémon ID immediately
-		// without the 3-character minimum required for name search
-		const maybeNumeric = rawQuery.startsWith('#') ? rawQuery.slice(1) : rawQuery
-		if (/^[0-9]+$/.test(maybeNumeric)) {
-			const parsed = parseInt(maybeNumeric, 10)
-			const normalized = Number.isNaN(parsed) ? maybeNumeric : String(parsed)
+    // Empty query — return all
+    if (!rawQuery) return pokemonList.value
 
-			return pokemonList.value.filter((pokemon) => {
-				const idStr = String(pokemon.id)
-				const padded = idStr.padStart(3, '0')
-				return idStr.startsWith(normalized) || padded.startsWith(normalized)
-			})
-		}
+    // Numeric search: supports "1", "007", "#4" — no 3-char minimum
+    const maybeNumeric = rawQuery.startsWith('#') ? rawQuery.slice(1) : rawQuery
+    if (/^[0-9]+$/.test(maybeNumeric)) {
+        const parsed = parseInt(maybeNumeric, 10)
+        const normalized = Number.isNaN(parsed) ? maybeNumeric : String(parsed)
 
-		if (rawQuery.length < 3) return pokemonList.value
-		return pokemonList.value.filter((pokemon) => pokemon.name.toLowerCase().includes(rawQuery))
-	})
+        return pokemonList.value.filter((pokemon) => {
+            const idStr = String(pokemon.id)
+            const padded = idStr.padStart(3, '0')
+            return idStr.startsWith(normalized) || padded.startsWith(normalized)
+        })
+    }
+
+    // Name search: minimum 3 characters required
+    if (rawQuery.length < 3) return pokemonList.value
+    return pokemonList.value.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(rawQuery)
+    )
+  })
 
 	// Actions: fetch list + details from PokeAPI and map into app-friendly Pokemon model
 	const fetchPokemon = async () => {

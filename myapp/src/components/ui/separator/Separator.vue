@@ -8,25 +8,25 @@ type Orientation = 'horizontal' | 'vertical'
 defineOptions({ name: 'UiSeparator' })
 
 const props = withDefaults(
-	defineProps<{
-		orientation?: Orientation
-	}>(),
-	{
-		orientation: 'horizontal',
-	},
+  defineProps<{
+    orientation?: Orientation
+  }>(),
+  {
+    orientation: 'horizontal',
+  },
 )
 
 const attrs = useAttrs()
 
 const classes = computed(() =>
-	cn(
-		'bg-slate-200/80 dark:bg-slate-700/60',
-		props.orientation === 'horizontal' ? 'h-px w-full' : 'h-6 w-px',
-		attrs.class as string,
-	),
+  cn(
+    'bg-slate-200/80 dark:bg-slate-700/60',
+    props.orientation === 'horizontal' ? 'h-px w-full' : 'h-6 w-px',
+    attrs.class as string,
+  ),
 )
 </script>
 
 <template>
-	<div role="separator" :class="classes" :aria-orientation="orientation" />
+  <div role="separator" :class="classes" :aria-orientation="orientation" />
 </template>
